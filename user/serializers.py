@@ -33,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AuthTokenSerializer(serializers.Serializer):
-    email = serializers.CharField(label=_("Email"), write_only=True)
+    email = serializers.EmailField(label=_("Email"), write_only=True)
     password = serializers.CharField(
         label=_("Password"),
         style={"input_type": "password"},
@@ -49,7 +49,7 @@ class AuthTokenSerializer(serializers.Serializer):
         if email and password:
             user = authenticate(
                 request=self.context.get("request"),
-                email=email,
+                username=email,
                 password=password
             )
 
@@ -60,7 +60,7 @@ class AuthTokenSerializer(serializers.Serializer):
                 msg = _("Unable to log in with provided credentials.")
                 raise serializers.ValidationError(msg, code="authorization")
         else:
-            msg = _('Must include "username" and "password".')
+            msg = _('Must include "email" and "password".')
             raise serializers.ValidationError(msg, code="authorization")
 
         attrs["user"] = user

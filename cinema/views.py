@@ -94,15 +94,12 @@ class MovieViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action == "list":
-            print("MovieListSerializer")
             return MovieListSerializer
 
         elif self.action == "retrieve":
-            print("MovieDetailSerializer")
             return MovieDetailSerializer
 
         elif self.action == "upload_image":
-            print("MovieImageSerializer")
             return MovieImageSerializer
 
         return MovieSerializer
